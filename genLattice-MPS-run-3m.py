@@ -43,11 +43,6 @@ def lattice_gauge(h,J,K,m):
     hi_end = h*(kron4(s_z()/2,I(),I(),I())+kron4(I(),s_z()/2,I(),I())+kron4(I(),I(),s_z(),I())+kron4(I(),I(),I(),s_z())) - (J/2)*(kron4(I(),s_x(),I(),I())-kron4(s_z(),s_x(),s_z(),I())) - (J/2)*(kron4(I(),I(),s_x(),I())-kron4(I(),s_z(),s_x(),s_z())) - (K/2)*(kron4(I(),s_x(),I(),I()) + kron4(s_z(),s_x(),s_z(),I())) - (K/2)*(kron4(I(),I(),s_x(),I()) + kron4(I(),s_z(),s_x(),s_z())) - (m/2)*((1/2)*kron4(s_z(),s_z(),I(),I()) + kron4(I(),s_z(),s_z(),I()) + kron4(I(),I(),s_z(),s_z()))
     return [hi_start,hi,hi_end]
 
-# def lattice_gauge(h,J):
-#     hi_start = h*(kron4(s_z(),I(),I(),I())+kron4(I(),s_z(),I(),I())+kron4(I(),I(),s_z()/2,I())+kron4(I(),I(),I(),s_z()/2)) - (J/2)*(kron4(I(),s_x(),I(),I())-kron4(s_z(),s_x(),s_z(),I())) - (J/2)*(kron4(I(),I(),s_x(),I())-kron4(I(),s_z(),s_x(),s_z()))
-#     hi = h*(kron4(s_z()/2,I(),I(),I())+kron4(I(),s_z()/2,I(),I())+kron4(I(),I(),s_z()/2,I())+kron4(I(),I(),I(),s_z()/2)) - (J/2)*(kron4(I(),s_x(),I(),I())-kron4(s_z(),s_x(),s_z(),I())) - (J/2)*(kron4(I(),I(),s_x(),I())-kron4(I(),s_z(),s_x(),s_z()))
-#     hi_end = h*(kron4(s_z()/2,I(),I(),I())+kron4(I(),s_z()/2,I(),I())+kron4(I(),I(),s_z(),I())+kron4(I(),I(),I(),s_z())) - (J/2)*(kron4(I(),s_x(),I(),I())-kron4(s_z(),s_x(),s_z(),I())) - (J/2)*(kron4(I(),I(),s_x(),I())-kron4(I(),s_z(),s_x(),s_z()))
-#     return [hi_start,hi,hi_end]
 
 def init_psi(L):
     psi = np.zeros((L,2),dtype=np.complex128)
