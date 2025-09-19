@@ -6,45 +6,50 @@ import math
 import time
 from os.path import exists
 
-def vec_conj(a):
+
+# Useful functions for calculations
+
+def vec_conj(a): # returns the conjugate of vector/state "a"
     return np.conjugate(a)
 
-def vec_dot(a,b):
+def vec_dot(a,b): # returns the inner product between states a and b. <b|a> in Dirac notation
     # second vector is conjuagated
     return np.dot(a,vec_conj(b))
 
-def dagger(M):
+def dagger(M): # Returns the conjugate transpose of a Matrix/Operator
     return np.conjugate(np.transpose(M))
 
-def normalize(psi):
+def normalize(psi): # Returns the normalized wavefunction
     return psi/np.sqrt(vec_dot(psi,psi))
 
-def s_x():
+def s_x(): # Pauli \sigma_x operator
     sx = np.matrix([[0,1],[1,0]])
     return sx
 
-def s_y():
+def s_y(): # Pauli \sigma_y operator
     sy = np.matrix([[0,-1j],[1j,0]])
     return sy
 
-def s_z():
+def s_z(): # Pauli \sigma_z operator
     sz = np.matrix([[1,0],[0,-1]])
     return sz
     
-def kron4(A,B,C,D):
+def kron4(A,B,C,D): # Returns the Kronecker product of operators A,B,C and D
     return np.kron(A,np.kron(B,np.kron(C,D)))
 
-def I():
+def I(): # 2x2 Identity matrix
     return np.eye(2)
 
-def lattice_gauge(h,J,K,m):
+# Below are the functions relevant to the problem simulation
+
+def lattice_gauge(h,J,K,m): # Returns the Z_2 lattice gauge theory Hamiltonian that we simulate
     hi_start = h*(kron4(s_z(),I(),I(),I())+kron4(I(),s_z(),I(),I())+kron4(I(),I(),s_z()/2,I())+kron4(I(),I(),I(),s_z()/2)) - (J/2)*(kron4(I(),s_x(),I(),I())-kron4(s_z(),s_x(),s_z(),I())) - (J/2)*(kron4(I(),I(),s_x(),I())-kron4(I(),s_z(),s_x(),s_z())) - (K/2)*(kron4(I(),s_x(),I(),I()) + kron4(s_z(),s_x(),s_z(),I())) - (K/2)*(kron4(I(),I(),s_x(),I()) + kron4(I(),s_z(),s_x(),s_z())) - (m/2)*(kron4(s_z(),s_z(),I(),I()) + kron4(I(),s_z(),s_z(),I()) + (1/2)*kron4(I(),I(),s_z(),s_z()))
     hi = h*(kron4(s_z()/2,I(),I(),I())+kron4(I(),s_z()/2,I(),I())+kron4(I(),I(),s_z()/2,I())+kron4(I(),I(),I(),s_z()/2)) - (J/2)*(kron4(I(),s_x(),I(),I())-kron4(s_z(),s_x(),s_z(),I())) - (J/2)*(kron4(I(),I(),s_x(),I())-kron4(I(),s_z(),s_x(),s_z())) - (K/2)*(kron4(I(),s_x(),I(),I()) + kron4(s_z(),s_x(),s_z(),I())) - (K/2)*(kron4(I(),I(),s_x(),I()) + kron4(I(),s_z(),s_x(),s_z())) - (m/2)*((1/2)*kron4(s_z(),s_z(),I(),I()) + kron4(I(),s_z(),s_z(),I()) + (1/2)*kron4(I(),I(),s_z(),s_z()))
     hi_end = h*(kron4(s_z()/2,I(),I(),I())+kron4(I(),s_z()/2,I(),I())+kron4(I(),I(),s_z(),I())+kron4(I(),I(),I(),s_z())) - (J/2)*(kron4(I(),s_x(),I(),I())-kron4(s_z(),s_x(),s_z(),I())) - (J/2)*(kron4(I(),I(),s_x(),I())-kron4(I(),s_z(),s_x(),s_z())) - (K/2)*(kron4(I(),s_x(),I(),I()) + kron4(s_z(),s_x(),s_z(),I())) - (K/2)*(kron4(I(),I(),s_x(),I()) + kron4(I(),s_z(),s_x(),s_z())) - (m/2)*((1/2)*kron4(s_z(),s_z(),I(),I()) + kron4(I(),s_z(),s_z(),I()) + kron4(I(),I(),s_z(),s_z()))
     return [hi_start,hi,hi_end]
 
 
-def init_psi(L):
+def init_psi(L): # This is the 3-meson initial state that we time evolve (L is the total number of spins)
     psi = np.zeros((L,2),dtype=np.complex128)
     for i in range(L):
         if i == int(L/2) or i == int(L/2)-1 or i == int(L/2)+1:
@@ -53,7 +58,7 @@ def init_psi(L):
             psi[i] += np.array([0,1])
     return psi
 
-def init_psi_tq(L):
+def init_psi_tq(L): # This is the tetraquark initial state that we time evolve
     psi = np.zeros((L,2),dtype=np.complex128)
     for i in range(L):
         if i == int(L/2)-1 or i == int(L/2)+1:
@@ -62,13 +67,15 @@ def init_psi_tq(L):
             psi[i] += np.array([0,1])
     return psi
 
-def init_psi_vac(L):
+def init_psi_vac(L): # This is the vacuum state that we time evolve for background subtraction
     psi = np.zeros((L,2),dtype=np.complex128)
     for i in range(L):
         psi[i] += np.array([0,1])
     return psi
 
-def init_psi_i(L):
+# Below are some other initial states: anyone using this code can add any spin initial state of choice
+
+def init_psi_i(L): # Single spin flipped in the middle
     psi = np.zeros((L,2),dtype=np.complex128)
     for i in range(L):
         if i == int(L/2):
@@ -77,7 +84,7 @@ def init_psi_i(L):
             psi[i] += np.array([0,1])
     return psi
 
-def init_psi2(L):
+def init_psi2(L): # Two spins flipped in locations L/4 and 3L/4 where L is chain size (total number of spins)
     psi = np.zeros((L,2),dtype=np.complex128)
     for i in range(L):
         if i == int(L/4) or i == int(3*L/4):
@@ -86,7 +93,8 @@ def init_psi2(L):
             psi[i] += np.array([0,1])
     return psi
 
-def init_psi_m(L):
+def init_psi_m(L): # Initial state where there are domain walls every four spins (This is a higher energy state and will require larger 
+                    # bond dimension to simulate)
     psi = np.zeros((L,2),dtype=np.complex128)
     for i in range(L):
         if (i+1)%8 in [1,2,7,0]:
@@ -95,8 +103,10 @@ def init_psi_m(L):
             psi[i] += np.array([1,0])
     return psi
 
+# Below is initializing the Matrix Product State: uses the init_psi() function. 
+
 def init_MPS_dict(L):
-    psi = init_psi(L)
+    psi = init_psi(L) # Change this to simulate a different initial state
     A_dict = {}
     for i in np.arange(0,L,2):
         key = str("A"+str(i))
@@ -115,15 +125,18 @@ class MPS:
     m = #MM#
     
     def __init__(self,L,chi,T,N):
-        self.L = L
-        self.chi = chi
-        self.T = T
-        self.N = N
-        self.dt = self.T/self.N
+        self.L = L                    # System size
+        self.chi = chi                # Maximum bond dimension for the TEBD time evolution
+        self.T = T                    # Total evolution time
+        self.N = N                    # Total time steps: T/N determines the Trotter step
+        self.dt = self.T/self.N       # Trotter step
         
-        # Initialize U
         
-        Hi_start, Hi, Hi_end = lattice_gauge(self.h,self.J,self.K,self.m)
+
+        # Initialize the Hamiltonian - This is a local Hamitonian with different local boundary terms
+        Hi_start, Hi, Hi_end = lattice_gauge(self.h,self.J,self.K,self.m) 
+
+        # Initialize the Unitary U
         self.U = expm(-1j*self.dt*Hi)
         self.U_start = expm(-1j*self.dt*Hi_start)
         self.U_end = expm(-1j*self.dt*Hi_end)
@@ -155,7 +168,7 @@ class MPS:
         self.avg_ml = 0
         
         
-    # Returns the position of lmbd based on the trace
+    # Returns the position of lmbd based on the trace - lmbd is the lambda matrix that is generated after SVD
     def lmbd_pos(self):
         for i in range(self.L):
             key = "A"+str(i)
@@ -164,7 +177,7 @@ class MPS:
                 break
         return i
     
-    # Check lmbd_position using the previous function
+    # Check lmbd_position using the lmbd_pos() - To make sure lambda is in position for the correct TEBD implementation
     def lmbd_check(self,ind):
         if (ind[0] == self.lmbd_pos() or ind[1] == self.lmbd_pos()):
             return True
@@ -173,7 +186,7 @@ class MPS:
             return False
     
     
-    # Updates the MPS and runs applyU_schrodinger
+    # Updates the MPS and runs applyU_schrodinger - Used for time evolving nearest neighbor MPS sites and performs SVD
     def applyU(self,ind,dirc,U,lm=False):
         
         # This part relocates lmbd to the right position
@@ -185,8 +198,8 @@ class MPS:
         
         # lm checks if we want to apply U or move lmbd
         if lm == False:
-#             self.lmbd_check(ind)
-            if sch_bool == True:
+#             self.lmbd_check(ind) - in this code, lmbd_check is not done (not required because the applyU function has been check on previous codes)
+            if sch_bool == True: # Exact check (sch_bool is not yet integrated in this code)
                 self.applyU_schrodinger(ind[0],U)
             U = np.reshape(U,(4,4,4,4))
             
@@ -198,7 +211,7 @@ class MPS:
         chi1 = np.shape(A1)[0]
         chi2 = np.shape(A2)[2]
     
-        #s1 = np.einsum('aib,bjc,ijkl->aklc',A1,A2,U)
+        # This part applies the U and does SVD
         s1 = np.einsum('ijkl,akb,blc->aijc',U,A1,A2,optimize='optimal')
         s2 = np.reshape(s1,(4*chi1,4*chi2))
         try:
@@ -215,7 +228,7 @@ class MPS:
         chi12_p = np.min([self.chi,chi12])
         lmbd = np.diag(lmbd)
     
-        # Truncation step
+        # Truncation step - truncates to first chi singular values
         lmbd = lmbd[:chi12_p,:chi12_p]
         Lp = Lp[:,:chi12_p]
         R = R[:chi12_p,:]
@@ -237,7 +250,7 @@ class MPS:
         self.A_dict["A"+str(ind[1])] = A2
         
         # Checks the TEBD and Schrodinger wavefunctions match
-        if sch_bool == True:
+        if sch_bool == True: # (Exact check is not yet integrated with this code)
             if not self.check_schrodinger_psi():
                 print('Warning: Wavefunctions do not match')
     
@@ -249,7 +262,7 @@ class MPS:
     def move_lmbd_left(self,ind):
         self.applyU([ind,ind+2],'left',1,lm=True)
     
-    # Sweeps over the entire system and updates the MPS and the Schrodinger wavefunction (1 time step)
+    # Sweeps over the entire system and updates the MPS and the Schrodinger wavefunction (2 time steps) - will update the MPS to be the time evolved MPS
     def sweepU(self):
     
         sites = [[i,i+2] for i in np.arange(0,self.L-2,2)]
@@ -286,7 +299,8 @@ class MPS:
                 self.move_lmbd_left(self.lmbd_position-2)
     
         
-    # Measures the expectation value using the MPS
+    # Measures the expectation values of operators <n_i>, <m_3i> and <q_4i> using the MPS that are shown in the paper
+    # Also measures average meson length and some other expectation values
     def measure_TEBD(self):
         
         self.left_trace = []
@@ -454,13 +468,15 @@ class MPS:
         self.TEBD_psi = temp.flatten()
     
     # Function to check the TEBD and Schrodinger wavefunction
-    def check_schrodinger_psi(self):
+    def check_schrodinger_psi(self): # (Check is not yet integrated with this code)
         self.MPS_to_wf()
         if np.allclose(self.TEBD_psi,self.schrodinger_psi):
             return True
         else:
             return False
-        
+
+    # Below, all the functions are used in measuring expectation values
+    
     def build_left(self):
         temp = np.reshape(1.+0.*1j,(1,1))
         self.left_trace.append(temp)
@@ -789,11 +805,12 @@ class MPS:
                 szIIIIsz = np.einsum('hig,ij,gjh',szIIIIsz,np.kron(s_z(),I()),self.A_dict["A"+str(ind+5)],optimize='optimal')
             self.SzIIIISz_build[ind] = szIIIIsz
 
-# Main code
+# Main code - Does the time evolution
 
+# Parameters
 chi = #CHI#
-sch_bool = False
-bound_diff = False
+sch_bool = False # Check is not yet integrated with this code - do not turn this to True
+bound_diff = False # No other case in this specific code, do not turn this to True
 L = #LL#
 T = #TT#
 N = #NN#
