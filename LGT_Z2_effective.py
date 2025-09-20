@@ -2,7 +2,7 @@ import numpy as np
 from scipy.linalg import expm
 import time
 
-# Build the basis state structure
+# Build the basis state structure - structure is shown in the paper
 def basis_indices(L):
     basis_ind = []
     for i in range(L-1):
@@ -14,6 +14,7 @@ def basis_indices(L):
                 basis_ind.append([i,j-int((L-i-1)/2)])
     return basis_ind
 
+# Build the tight-binding hamiltonian based on the basis state structure
 def hamiltonian(L, K, J, h):
     size = int((L**2 - L - 2) / 2)
     hamil = np.zeros((size, size), dtype=np.complex128)
@@ -43,28 +44,33 @@ def hamiltonian(L, K, J, h):
             hamil[j, i] = hamil[i, j]
     return hamil
 
+# This is the 3-meson initial state
 def init_state(L):
     psi = np.zeros(int((L**2-L-2)/2),dtype=np.complex128)
     psi[int(L/2)-1] = 1.+0.*1j
     return psi
 
+# This is the tetraquark initial state
 def init_state_tq(L):
     psi = np.zeros(int((L**2-L-2)/2),dtype=np.complex128)
     psi[int(L/2)-1+L-2] = 1.+0.*1j
     return psi
-
+    
+# This function measures total tetraquark number
 def tqe_measure(psi,L):
     n_3meson = 0
     for i in range(L-2,2*(L-2)):
         n_3meson += np.conjugate(psi[i])*psi[i]
     return n_3meson
 
+# This function measures total 3-meson number
 def n_3meson(psi,L):
     n3 = 0
     for i in range(0,L-2):
         n3 += np.conjugate(psi[i])*psi[i]
     return n3
 
+# Parameters
 T = 100
 N = 4000
 L = 100
@@ -75,6 +81,7 @@ h = 10
 tqe_arr = {}
 n3_arr = {}
 
+# Evoution for different values of K
 for k in K:
     t1 = time.time()
     H = hamiltonian(L,k,J,h)
@@ -92,6 +99,7 @@ for k in K:
     t2 = time.time()
     print(f'K={k}, time={t2-t1}')
 
+# Saving data
 import pickle
 with open(f'tqe_L100_J1_h10_tK_T{T}_N{N}_3m.pickle', 'wb') as f:
     pickle.dump(tqe_arr, f)
