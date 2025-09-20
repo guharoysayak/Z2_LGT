@@ -199,7 +199,7 @@ class MPS:
         # lm checks if we want to apply U or move lmbd
         if lm == False:
 #             self.lmbd_check(ind) - in this code, lmbd_check is not done (not required because the applyU function has been check on previous codes)
-            if sch_bool == True: # Exact check (sch_bool is not yet integrated in this code)
+            if sch_bool == True: # Exact check (sch_bool is not yet integrated in this code) ED check for this code is done separately
                 self.applyU_schrodinger(ind[0],U)
             U = np.reshape(U,(4,4,4,4))
             
@@ -809,7 +809,7 @@ class MPS:
 
 # Parameters
 chi = #CHI#
-sch_bool = False # Check is not yet integrated with this code - do not turn this to True
+sch_bool = False # Check is not yet integrated with this code - do not turn this to True - ED check is done separately
 bound_diff = False # No other case in this specific code, do not turn this to True
 L = #LL#
 T = #TT#
