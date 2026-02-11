@@ -4,7 +4,7 @@ This repository contains numerical simulation codes used to study real-time dyna
 
 The codes were used to generate the raw numerical data reported in:
 
-S. Guha Roy and V. Sharma, K. Xu, U. Borla, J. C. Halimeh, K. R. A. Hazzard, *Repulsively bound hadronic states in a $\mathbb{Z}_2$ lattice gauge theory*, arXiv:2510.23618.
+S. Guha Roy, V. Sharma, K. Xu, U. Borla, J. C. Halimeh and K. R. A. Hazzard, *Repulsively bound hadronic states in a $\mathbb{Z}_2$ lattice gauge theory*, arXiv:2510.23618.
 
 ---
 
