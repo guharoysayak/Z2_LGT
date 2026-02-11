@@ -12,8 +12,8 @@ S. Guha Roy and V. Sharma, K. Xu, U. Borla, J. C. Halimeh, K. R. A. Hazzard, *Re
 
 Z2_LGT/
   scripts/
-    TEBD_MPS_*.py
-    effective_model_*.py
+    *TEBD python scripts*.py
+    *effective model script*.py
   docs/
     RUNS.md
     REPRODUCIBILITY.md
