@@ -11,14 +11,14 @@ S. Guha Roy and V. Sharma, K. Xu, U. Borla, J. C. Halimeh, K. R. A. Hazzard, *Re
 ## Repository structure
 
 Z2_LGT/
-├── scripts/
-│   ├── TEBD_MPS_*.py
-│   ├── effective_model_*.py
-├── docs/
-│   ├── RUNS.md
-│   └── REPRODUCIBILITY.md
-├── README.md
-└── LICENSE
+  scripts/
+    TEBD_MPS_*.py
+    effective_model_*.py
+  docs/
+    RUNS.md
+    REPRODUCIBILITY.md
+  README.md
+  LICENSE
 
 
 - `scripts/` contains the full simulation codes used to generate the raw time-evolution data.
