@@ -9,12 +9,12 @@ All scripts in `scripts/` generate raw simulation output files (CSV). Outputs ar
   - Key parameters: L, chi, T, N, J, K, h, m
   - Output: `MPS_lattice_3m_L{L}_chi{chi}_T{T}_N{N}_J{J}_K{K}_m{m}_h{h}.csv
 
-- `scripts/genLattice-MPS-run-3m.py`
+- `scripts/genLattice-MPS-run-tq.py`
   - Purpose: TEBD evolution of the tetraquark initial state
   - Key parameters: L, chi, T, N, J, K, h, m
   - Output: `MPS_lattice_tq_L{L}_chi{chi}_T{T}_N{N}_J{J}_K{K}_m{m}_h{h}.csv
 
-- `scripts/genLattice-MPS-run-3m.py`
+- `scripts/genLattice-MPS-run-vac.py`
   - Purpose: TEBD evolution of the vacuum state
   - Key parameters: L, chi, T, N, J, K, h, m
   - Output: `MPS_lattice_vac_L{L}_chi{chi}_T{T}_N{N}_J{J}_K{K}_m{m}_h{h}.csv
