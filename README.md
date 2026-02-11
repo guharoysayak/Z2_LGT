@@ -12,11 +12,11 @@ S. Guha Roy and V. Sharma, K. Xu, U. Borla, J. C. Halimeh, K. R. A. Hazzard, *Re
 
 Z2_LGT/
 ├── scripts/
-│ ├── <TEBD MPS scripts>.py
-│ ├── <effective model scripts>.py
+│   ├── TEBD_MPS_*.py
+│   ├── effective_model_*.py
 ├── docs/
-│ ├── RUNS.md
-│ ├── REPRODUCIBILITY.md
+│   ├── RUNS.md
+│   └── REPRODUCIBILITY.md
 ├── README.md
 └── LICENSE
 
