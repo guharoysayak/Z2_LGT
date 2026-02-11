@@ -37,6 +37,21 @@ In addition, `scripts/` contains codes used for simulations of the effective mod
 
 Raw data and post-processing scripts used to generate the figures are available from the authors upon reasonable request.
 
+### Parameter specification
+
+The scripts in `scripts/` are provided in the same form used to generate the raw data
+reported in the paper. Simulation parameters such as bond dimension, system size,
+total evolution time, number of Trotter steps and the Hamiltonian parameters are specified directly in the scripts
+using placeholders (e.g., `#CHI#`, `#LL#`, `#TT#`, `#NN#`).
+
+In practice, these placeholders were replaced with numerical values prior to execution,
+typically via simple text substitution or job submission scripts on HPC systems.
+
+Users wishing to reproduce or extend the simulations should replace these placeholders
+with appropriate numerical values consistent with the parameter regimes described
+in the manuscript.
+
+
 ---
 
 ## Requirements
