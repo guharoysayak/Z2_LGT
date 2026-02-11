@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+
+# Raw simulation outputs (NOT tracked)
+results_raw/
+results/
+output/
+data/
+checkpoints/
+
+# Large numerical files
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.pt
+*.ckpt
+*.jsonl
+
+# Logs
+*.log
+
