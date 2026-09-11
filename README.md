@@ -1,11 +1,10 @@
 # Z2_LGT
 
-This repository contains numerical simulation codes used to study real-time dynamics of a one-dimensional $\mathbb{Z}_2$ lattice gauge theory using matrix product state (MPS)–based time-evolving block decimation (TEBD).
+This repository contains numerical simulation codes used to study real-time dynamics of a one-dimensional $\mathbb{Z}_2$ lattice gauge theory using matrix product state (MPS)–based time-evolving block decimation (TEBD). main_data folder contains data for Fig. 2, 3, A7 and A8 of the following paper. 
 
 The codes were used to generate the raw numerical data reported in:
 
 S. Guha Roy, V. Sharma, K. Xu, U. Borla, J. C. Halimeh and K. R. A. Hazzard, *Repulsively bound hadronic states in a $\mathbb{Z}_2$ lattice gauge theory*, arXiv:2510.23618.
-
 ---
 
 ## Repository structure
