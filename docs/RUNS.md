@@ -1,6 +1,6 @@
 # Runs and outputs
 
-All scripts in `scripts/` generate raw simulation output files (CSV). Outputs are not tracked in git.
+All scripts in `scripts/` generate raw simulation output files (CSV).
 
 ## Script list
 
